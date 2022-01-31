@@ -10,7 +10,7 @@ If the user needs to create a new installer, after cloning the github repository
 
     npm run make
 
-from the command line in the directory you cloned to. The installer will be located in .\out\make\squirrel.windows\x64. After running the installer, a shortcut to the installed version of OptiCal should be created on your desktop.
+from the command line in the directory you cloned to. The installer will be located in .\out\make\squirrel.windows\x64. After running the installer, a shortcut to the installed version of OptiCal should be created on your desktop. The location of the installed application will be C:\Users\User\AppData\Local\OptiCal.
 
 
 
