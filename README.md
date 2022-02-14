@@ -124,3 +124,8 @@ Now the user is ready to start using OptiCal!
       If the user would like to get a signal-to-noise ratio for any individual datafile, simply click the indicated Calculate SNR button, navigate to and select the datafile in question with the file explorer, and the fields below the Calculate SNR button will automatically be populated with the values calculated by OptiCal.
       
       ![analysis4](assets/screenshots/analysis_4.PNG)
+
+  ---
+  ### Cal File Generation
+  
+  Functions used to generate a cal file are located in ./objects/calFileGenerator.ts. When generateCalFile() gets called, OptiCal first sorts all the data in the selected calibration directory by temperature, in order of increasing concentration. DeltaT is determined based on the input mercury thermometer temperatures and the average temperature recorded by the probe during the X concentrations taken at that temperature (e.g. the average probe temperature for 17C would be based on the average temperatures of each individual concentration datafile within the 17C subfolder). DO is calculated with Benson & Krause using the input mercury thermometer temperatures, the oxygen concentrations entered for the calibration, and the pressure (will use whatever was entered for the default pressure if no pressure sensor was attached for the calibration). The lifetime averages are pulled from each of the individual files for specific concentrations within the temperature subfolders. Note that OptiCal curently always outputs a 0 for pressure offset, based on previous findings that showed no significant differences between using Opti O2 pressure sensors and the estimated local pressure based on NOAA reportings.
