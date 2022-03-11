@@ -73,7 +73,7 @@ Now the user is ready to start using OptiCal!
   
   ![calibration3](assets/screenshots/calibration_3.PNG)
   
-  Once the specified number of datapoints have been collected for the current concentration, the user will see OptiCal bring up this window. If the user is satisfied with the results of the current concentration, click the green Accept button to continue the calibration. If the user is unsatisfied with the recorded standard deviations, or any problems occurred during this concentration, Click the yellow Reject and rerun button to attempt collecting data again (the next time the user clicks the Start Concentration button, OptiCal will begin collceting data for this same oxygen concentration again) or click the red Reject and skip button to continue the calibration without attempting the same concentration (the next time the user clicks the Start Concentration button, OptiCal will begin collceting data for the next oxygen concentration in the queue).
+  Once the specified number of datapoints have been collected for the current concentration, the user will see OptiCal bring up this window. If the user is satisfied with the results of the current concentration, click the green Accept button to continue the calibration. If the user is unsatisfied with the recorded standard deviations, or any problems occurred during this concentration, Click the yellow Reject and rerun button to attempt collecting data again (the next time the user clicks the Start Concentration button, OptiCal will begin collecting data for this same oxygen concentration again) or click the red Reject and skip button to continue the calibration without attempting the same concentration (the next time the user clicks the Start Concentration button, OptiCal will begin collecting data for the next oxygen concentration in the queue).
 
   ![calibration4](assets/screenshots/calibration_4.PNG)
 
@@ -105,7 +105,7 @@ Now the user is ready to start using OptiCal!
   
   1. Generating a calibration file
       
-      To generate a calibration file from a full calibration dataset collected with OptiCal, click the indicated Select Calibration Data Folder button. Use the file explorer to navigate to the folder with your calibration data and select it.
+      To generate a calibration file from a full calibration dataset collected with OptiCal, click the indicated Select Calibration Data Folder button. Use the file explorer to navigate to the folder with your calibration data and select it (select the folder that contains all the subfolders for individual temperatures).
       
       ![analysis1](assets/screenshots/analysis_1.PNG)
       
@@ -124,8 +124,21 @@ Now the user is ready to start using OptiCal!
       If the user would like to get a signal-to-noise ratio for any individual datafile, simply click the indicated Calculate SNR button, navigate to and select the datafile in question with the file explorer, and the fields below the Calculate SNR button will automatically be populated with the values calculated by OptiCal.
       
       ![analysis4](assets/screenshots/analysis_4.PNG)
-
+      
   ---
   ### Cal File Generation
-  
-  Functions used to generate a cal file are located in ./objects/calFileGenerator.ts. When generateCalFile() gets called, OptiCal first sorts all the data in the selected calibration directory by temperature, in order of increasing concentration. DeltaT is determined based on the input mercury thermometer temperatures and the average temperature recorded by the probe during the X concentrations taken at that temperature (e.g. the average probe temperature for 17C would be based on the average temperatures of each individual concentration datafile within the 17C subfolder). DO is calculated with Benson & Krause using the input mercury thermometer temperatures, the oxygen concentrations entered for the calibration, and the pressure (will use whatever was entered for the default pressure if no pressure sensor was attached for the calibration). The lifetime averages are pulled from each of the individual files for specific concentrations within the temperature subfolders. Note that OptiCal currently always outputs a 0 for pressure offset, based on previous findings that showed no significant differences between using Opti O2 pressure sensors and the estimated local pressure based on NOAA reportings.
+ 
+  Functions used to generate a cal file are located in ./objects/calFileGenerator.ts. When generateCalFile() gets called, OptiCal first sorts all the data in the selected calibration directory by temperature, in order of increasing concentration. 
+
+DeltaT is determined based on the input mercury thermometer temperatures and the average temperature recorded by the probe during the X concentrations taken at that temperature (e.g. the average probe temperature for 17C would be based on the average temperatures of each individual concentration datafile within the 17C subfolder). 
+DeltaT = avg(
+Delta[avg(HgT1.1,HgT1.2,…,HgT1.n),avg(ProbeT1.1,ProbeT1.2,…,ProbeT1.n)],
+Delta[avg(HgT2.1,HgT2.2,…,HgT2.n),avg(ProbeT2.1,ProbeT2.2,…,ProbeT2.n)],
+…,
+Delta[avg(HgTm.1,HgTm.2,…,HgTm.n),avg(ProbeTm.1,ProbeTm.2,…,ProbeTm.n)])
+
+ DO is calculated with Benson & Krause using the input mercury thermometer temperatures, the oxygen concentrations entered for the calibration, and the pressure (will use whatever was entered for the default pressure if no pressure sensor was attached for the calibration). 
+Pressure used to calculate DO at a concentration is the average pressure recorded over that whole concentration (if using a pressure sensor)
+ 
+The lifetime averages are pulled from each of the individual files for specific concentrations within the temperature subfolders. Note that OptiCal currently always outputs a 0 for pressure offset, based on previous findings that showed no significant differences between using Opti O2 pressure sensors and the estimated local pressure based on NOAA reportings. (if going back to using pressure offset, will need to add input for NOAA pressure)
+
