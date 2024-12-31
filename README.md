@@ -6,11 +6,16 @@ In-house software designed to query Opti O2 dissolved oxygen sensors.
 
 
 # Installation
+For Developers:
 If the user needs to create a new installer, after cloning the github repository run 
 
     npm run make
 
-from the command line in the directory you cloned to. The installer will be located in .\out\make\squirrel.windows\x64. After running the installer, a shortcut to the installed version of OptiCal should be created on your desktop. The location of the installed application will be C:\Users\User\AppData\Local\OptiCal.
+from the command line in the directory you cloned to. The installer will be located in .\out\make\squirrel.windows\x64. 
+
+For Users:
+Copy the installer “OptiCal-1.0.8 Setup.exe” from Dropbox to a local location. Then just double click on the installer to run.
+After running the installer, a shortcut to the installed version of OptiCal should be created on your desktop. The location of the installed application will be C:\Users\User\AppData\Local\OptiCal.
 
 
 
